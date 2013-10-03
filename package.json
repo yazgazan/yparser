@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cd tests; node test.js"
   },
-  "repository": "",
+  "repository": "https://github.com/yazgazan/yparser",
   "keywords": [
     "LL",
     "LL parser",
