@@ -1,0 +1,7 @@
+
+main :: [line#line]+ eof ;
+
+line :: [value:content ';']* eol ;
+
+content :: [any ^ ';' ^ eol]* ;
+

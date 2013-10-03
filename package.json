@@ -1,0 +1,19 @@
+{
+  "name": "yparser",
+  "version": "0.0.1",
+  "description": "LL parser implemented in coffee-script",
+  "main": "yparser.js",
+  "scripts": {
+    "test": "cd tests; node test.js"
+  },
+  "repository": "",
+  "keywords": [
+    "LL",
+    "LL parser",
+    "parser",
+    "bnf",
+    "parsing"
+  ],
+  "author": "yazgazan@gmail.com",
+  "license": "BSD"
+}
