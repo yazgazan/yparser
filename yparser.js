@@ -320,7 +320,9 @@
         'eof': this.applyEOF,
         'eol': this.applyEOL,
         'id': this.applyId,
-        'int': this.applyInt
+        'int': this.applyInt,
+        'false': this.applyFalse,
+        'true': this.applyTrue
       };
       ExtendedParser.__super__.constructor.call(this);
     }
@@ -516,6 +518,14 @@
 
     ExtendedParser.prototype.applyInt = function(tree) {
       return this.readInteger();
+    };
+
+    ExtendedParser.prototype.applyFalse = function(tree) {
+      return false;
+    };
+
+    ExtendedParser.prototype.applyTrue = function(tree) {
+      return true;
     };
 
     return ExtendedParser;
@@ -1057,6 +1067,14 @@
             type: 'text',
             repeat: '1',
             nodes: ['int']
+          }, {
+            type: 'text',
+            repeat: '1',
+            nodes: ['false']
+          }, {
+            type: 'text',
+            repeat: '1',
+            nodes: ['true']
           }
         ]
       });

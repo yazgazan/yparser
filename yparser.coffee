@@ -217,6 +217,8 @@ class ExtendedParser extends SimpleParser
       'eol': @applyEOL
       'id': @applyId
       'int': @applyInt
+      'false' : @applyFalse
+      'true' : @applyTrue
     super()
 
   setGrammar: (name, tree) -> @grammars[name] = tree
@@ -331,6 +333,9 @@ class ExtendedParser extends SimpleParser
   applyId: (tree) -> @readIdentifier()
 
   applyInt: (tree) -> @readInteger()
+
+  applyFalse: (tree) -> false
+  applyTrue: (tree) -> true
 
 
 class AstParser extends ExtendedParser
@@ -765,6 +770,14 @@ class GrammarParser extends AstParser
           type: 'text'
           repeat: '1'
           nodes: ['int']
+        },{
+          type: 'text'
+          repeat: '1'
+          nodes: ['false']
+        },{
+          type: 'text'
+          repeat: '1'
+          nodes: ['true']
         }
       ]
 
