@@ -363,6 +363,9 @@
       if (ret === false) {
         this.pos = backupPos;
       }
+      if ((tree.peek != null) && tree.peek === true) {
+        this.pos = backupPos;
+      }
       return ret;
     };
 
@@ -858,6 +861,7 @@
       this.lastCap = null;
       this.capToField = false;
       this.goingForNot = false;
+      this.goingForPeek = false;
       return GrammarParser.__super__.loadString.call(this, str);
     };
 
@@ -1268,6 +1272,10 @@
             nodes: ['ast']
           }, {
             type: 'sub',
+            repeat: '?',
+            nodes: ['peek']
+          }, {
+            type: 'sub',
             repeat: '1',
             nodes: ['token_content']
           }, {
@@ -1276,6 +1284,12 @@
             nodes: ['repeater']
           }
         ]
+      });
+      this.setGrammar('peek', {
+        type: 'text',
+        repeat: '1',
+        ast: 'peek',
+        nodes: ['%']
       });
       this.setGrammar('rule', {
         type: 'and',
@@ -1413,6 +1427,10 @@
           node.cap = this.lastCap;
           this.lastCap = null;
         }
+        if (this.goingForPeek === true) {
+          this.goingForPeek = false;
+          node.peek = true;
+        }
         if (this.goingForNot === true) {
           this.goingForNot = false;
           notNode = this.createNotNode();
@@ -1456,6 +1474,10 @@
           node.cap = this.lastCap;
           this.lastCap = null;
         }
+        if (this.goingForPeek === true) {
+          this.goingForPeek = false;
+          node.peek = true;
+        }
         if (this.goingForNot === true) {
           this.goingForNot = false;
           notNode = this.createNotNode();
@@ -1485,6 +1507,10 @@
           node.cap = this.lastCap;
           this.lastCap = null;
         }
+        if (this.goingForPeek === true) {
+          this.goingForPeek = false;
+          node.peek = true;
+        }
         if (this.goingForNot === true) {
           this.goingForNot = false;
           node.type = 'not';
@@ -1498,6 +1524,10 @@
           }
           return null;
         };
+      });
+      this.register('peek', function(ast) {
+        this.goingForPeek = true;
+        return null;
       });
       this.register('closing_group', function(ast) {
         if (ast.type === 'undefined') {
@@ -1581,6 +1611,10 @@
           }
           node.cap = this.lastCap;
           this.lastCap = null;
+        }
+        if (this.goingForPeek === true) {
+          this.goingForPeek = false;
+          node.peek = true;
         }
         if (this.goingForNot === true) {
           this.goingForNot = false;

@@ -243,6 +243,8 @@ class ExtendedParser extends SimpleParser
       return ret2
     if ret is false
       @pos = backupPos
+    if tree.peek? and tree.peek is true
+      @pos = backupPos
     return ret
 
   execOnce: (tree, cb) -> cb tree
@@ -572,6 +574,7 @@ class GrammarParser extends AstParser
     @lastCap = null
     @capToField = false
     @goingForNot = false
+    @goingForPeek = false
     super str
 
   loadGrammar: ->
@@ -971,6 +974,10 @@ class GrammarParser extends AstParser
           nodes: ['ast']
         },{
           type: 'sub'
+          repeat: '?'
+          nodes: ['peek']
+        },{
+          type: 'sub'
           repeat: '1'
           nodes: ['token_content']
         },{
@@ -979,6 +986,12 @@ class GrammarParser extends AstParser
           nodes: ['repeater']
         }
       ]
+
+    @setGrammar 'peek',
+      type: 'text'
+      repeat: '1'
+      ast: 'peek'
+      nodes: ['%']
 
     @setGrammar 'rule',
       type: 'and'
@@ -1103,6 +1116,9 @@ class GrammarParser extends AstParser
           @capToField = false
         node.cap = @lastCap
         @lastCap = null
+      if @goingForPeek is true
+        @goingForPeek = false
+        node.peek = true
       if @goingForNot is true
         @goingForNot = false
         notNode = @createNotNode()
@@ -1139,6 +1155,9 @@ class GrammarParser extends AstParser
           @capToField = false
         node.cap = @lastCap
         @lastCap = null
+      if @goingForPeek is true
+        @goingForPeek = false
+        node.peek = true
       if @goingForNot is true
         @goingForNot = false
         notNode = @createNotNode()
@@ -1162,6 +1181,9 @@ class GrammarParser extends AstParser
           @capToField = false
         node.cap = @lastCap
         @lastCap = null
+      if @goingForPeek is true
+        @goingForPeek = false
+        node.peek = true
       if @goingForNot is true
         @goingForNot = false
         node.type = 'not'
@@ -1172,6 +1194,10 @@ class GrammarParser extends AstParser
         if ast.type is 'undefined'
           ast.type = 'and'
         return null
+
+    @register 'peek', (ast) ->
+      @goingForPeek = true
+      return null
 
     @register 'closing_group', (ast) ->
       if ast.type is 'undefined'
@@ -1241,6 +1267,9 @@ class GrammarParser extends AstParser
           @capToField = false
         node.cap = @lastCap
         @lastCap = null
+      if @goingForPeek is true
+        @goingForPeek = false
+        node.peek = true
       if @goingForNot is true
         @goingForNot = false
         notNode = @createNotNode()
