@@ -1,6 +1,6 @@
 {
   "name": "yparser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "LL parser implemented in coffee-script",
   "main": "yparser.js",
   "scripts": {
