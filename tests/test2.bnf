@@ -1,9 +1,0 @@
-
-main :: [anyspace* cmd#cmd anyspace*]+ eof ;
-
-cmd :: '(' anyspace* [.repeat:int | .id:_id | .str!str] arg* anyspace* ')' ;
-
-arg :: anyspace+ [num:int|id:_id|str!str|cmd#cmd] ;
-
-_id :: [any ^ ['(' | ')' | '"' | anyspace]]+ ;
-
