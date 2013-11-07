@@ -4,7 +4,7 @@
   "description": "BNF based parser implemented in coffee-script",
   "main": "lib/index.js",
   "scripts": {
-    "test": "cd tests; node test.js"
+    "test": "make test"
   },
   "repository": "https://github.com/yazgazan/yparser",
   "keywords": [
