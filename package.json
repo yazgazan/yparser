@@ -1,8 +1,8 @@
 {
   "name": "yparser",
-  "version": "0.0.2",
-  "description": "LL parser implemented in coffee-script",
-  "main": "yparser.js",
+  "version": "0.2.0",
+  "description": "BNF based parser implemented in coffee-script",
+  "main": "lib/index.js",
   "scripts": {
     "test": "cd tests; node test.js"
   },
@@ -15,5 +15,8 @@
     "parsing"
   ],
   "author": "yazgazan@gmail.com",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "mocha": "~1.14.0"
+  }
 }
